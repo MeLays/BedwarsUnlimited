@@ -581,6 +581,7 @@ public class Arena {
 		sendMessage(msg);
 	}
 
+	
 	int scheduler;
 	int gametimer;
 

@@ -95,7 +95,7 @@ public class NPCManager {
 			Class<?> NBTTagCompound = getNMSClass("NBTTagCompound");
 			
 			Object villager_entity = CraftEntity.cast(e).getClass().getMethod("getHandle").invoke(CraftEntity.cast(e));
-			Object nbt = villager_entity.getClass().getMethod("getNBTTag").invoke(villager_entity);
+			Object nbt = NBTTagCompound.newInstance();
 			if (nbt == null) {
 				nbt = NBTTagCompound.newInstance();
 			}

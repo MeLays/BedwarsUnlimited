@@ -33,6 +33,9 @@ public class PlayerInteractEntityEventListener implements Listener{
 			if (!(e.getRightClicked().getType() == EntityType.VILLAGER)) {
 				return;
 			}
+			if (main.getArenaManager().searchPlayer(p).specs.contains(p)) {
+				return;
+			}
 			main.getBedwarsShop().openShop(e.getPlayer());
 			e.setCancelled(true);
 		}

@@ -31,6 +31,7 @@ public class EntityDamageByEntityEventListener implements Listener{
 		this.main = main;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
 		

@@ -204,9 +204,6 @@ public class Arena {
 		p.setAllowFlight(true);
 		p.setFlying(true);
 		p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 1));
-		if (main.getFriendJoinHook() != null) {
-			main.getFriendJoinHook().setArena(p);
-		}
 	}
 
 	private void join(Player p) {
@@ -219,9 +216,6 @@ public class Arena {
 			arenaLobby.updatePlayer(p);
 			if (!silent)this.sendMessage(
 					main.getMessageFetcher().getMessage("game.join", true).replaceAll("%player%", p.getName()));
-		}
-		if (main.getFriendJoinHook() != null) {
-			main.getFriendJoinHook().setArena(p);
 		}
 		updateTab();
 	}
@@ -274,9 +268,6 @@ public class Arena {
 			if (this.getAll().contains(member) && state == ArenaState.LOBBY) {
 				this.leave(member);
 			}
-		}
-		if (main.getFriendJoinHook() != null) {
-			main.getFriendJoinHook().setArena(p);
 		}
 	}
 
@@ -606,7 +597,11 @@ public class Arena {
 
 				gametimer -= 20;
 				scoreBoard.update();
-
+		        ArrayList<FineRelativeLocation> shops = Arena.this.cluster.getClusterMeta().getShops();
+		        for (int i = 0; i < shops.size(); i++) {
+		        	main.getNPCManager().getEntity((UUID)Arena.this.spawned_merchants.get(i)).teleport(((FineRelativeLocation)shops.get(i)).toLocation(Arena.this.relative));
+		        }
+				
 			}
 
 		}, 20, 20);

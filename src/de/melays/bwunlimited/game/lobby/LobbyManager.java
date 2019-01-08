@@ -180,6 +180,9 @@ public class LobbyManager {
 	}
 	
 	public boolean isSuitable (Group group , Cluster cluster) {
+		if (group == null || cluster == null) {
+			return false;
+		}
 		if (cluster.getClusterMeta().getTeams().size() != 2) return false;
 		int max = 0;
 		for (Team t : cluster.getClusterMeta().getTeams()) {

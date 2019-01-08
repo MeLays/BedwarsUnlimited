@@ -27,6 +27,7 @@ import de.melays.bwunlimited.commands.groups.GroupCommand;
 import de.melays.bwunlimited.commands.leave.LeaveCommand;
 import de.melays.bwunlimited.commands.spectate.SpectateCommand;
 import de.melays.bwunlimited.commands.start.StartCommand;
+import de.melays.bwunlimited.friendjoin.FriendJoinHook;
 import de.melays.bwunlimited.game.ItemManager;
 import de.melays.bwunlimited.game.arenas.ArenaManager;
 import de.melays.bwunlimited.game.arenas.settings.SettingsManager;
@@ -118,6 +119,11 @@ public class Main extends JavaPlugin{
 	
 	public SettingsManager getSettingsManager() {
 		return settingsManager;
+	}
+	
+	FriendJoinHook friendJoinHook;
+	public FriendJoinHook getFriendJoinHook() {
+		return friendJoinHook;
 	}
 	
 	TemplateSignManager templateSignManager;
@@ -256,6 +262,10 @@ public class Main extends JavaPlugin{
 		this.messageFetcher = new MessageFetcher(this);
 		prefix = this.getMessageFetcher().getMessage("prefix", false) + " ";
 		
+		if (Bukkit.getPluginManager().isPluginEnabled("SymptaFriends")) {
+			this.friendJoinHook = new FriendJoinHook(this , ((de.melays.sf.Main)Bukkit.getPluginManager().getPlugin("SymptaFriends")).friendManager);
+		}
+		
 		//Set Command Executers
 		getCommand("bw").setExecutor(new MainCommand(this));
 		getCommand("start").setExecutor(new StartCommand(this));
@@ -292,6 +302,13 @@ public class Main extends JavaPlugin{
 		Bukkit.getPluginManager().registerEvents(new CraftItemEventListener(this), this);
 		Bukkit.getPluginManager().registerEvents(new EntityExplodeEventListener(this), this);
 		
+		
+		for (Player p : Bukkit.getOnlinePlayers()) {
+			this.getLobbyManager().toLobby(p);
+			if (getFriendJoinHook() != null) {
+				getFriendJoinHook().setArena(p);
+			}
+		}
 		
 		updateTime();
 		

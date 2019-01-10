@@ -10,6 +10,7 @@ presetworld: presets
 creature_spawn: false
 group_command: true
 leave_command: true
+stats_command: true
 tab_header_and_footer: true
 default_group_size: 2
 group_size_permission:

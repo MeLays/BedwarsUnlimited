@@ -48,10 +48,14 @@ public class ClusterMeta {
 		ArrayList<ItemSpawner> returnlist = new ArrayList<ItemSpawner>();
 		HashMap<Integer , FineRelativeLocation> map = tools.getFineRelativeLocationsCountingMap(cluster.name+".meta.spawners");
 		for (Integer id : map.keySet()) {
+			ArrayList<String> disabled_categories = new ArrayList<String>();
+			if (tools.getClusterFile().getStringList(cluster.name+".meta.spawners."+id+".disable_in_categories") != null){
+				disabled_categories = (ArrayList<String>) tools.getClusterFile().getStringList(cluster.name+".meta.spawners."+id+".disable_in_categories");
+			}
 			returnlist.add(new ItemSpawner(main , id , map.get(id) , 
 					Material.getMaterial(tools.getClusterFile().getString(cluster.name+".meta.spawners."+id+".material")),
 					tools.getClusterFile().getInt(cluster.name+".meta.spawners."+id+".ticks"),
-					tools.getClusterFile().getString(cluster.name+".meta.spawners."+id+".display")));
+					tools.getClusterFile().getString(cluster.name+".meta.spawners."+id+".display") , disabled_categories));
 		}
 		return returnlist;
 	}
@@ -90,6 +94,7 @@ public class ClusterMeta {
 		tools.getClusterFile().set(cluster.name+".meta.spawners."+r+".material", m.toString());
 		tools.getClusterFile().set(cluster.name+".meta.spawners."+r+".ticks", ticks);
 		tools.getClusterFile().set(cluster.name+".meta.spawners."+r+".display", displayname);
+		tools.getClusterFile().set(cluster.name+".meta.spawners."+r+".disable_in_categories", new ArrayList<String>());
 		tools.saveFile();
 		return r;
 	}

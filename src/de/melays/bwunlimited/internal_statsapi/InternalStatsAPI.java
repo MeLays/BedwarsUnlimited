@@ -83,5 +83,14 @@ public class InternalStatsAPI{
 		}
 		return namecache.get(s);
 	}
+	
+	public String getUUIDFromName (String s){
+		InternalAdvancedChannelQuery acq = namedb.getAdvancedChannelQuery();
+		try {
+			return acq.querryUsersWhere("UUID","NAME", s).get(0);
+		} catch (Exception e) {
+			return null;
+		}
+	}
 
 }

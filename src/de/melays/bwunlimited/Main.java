@@ -27,6 +27,7 @@ import de.melays.bwunlimited.commands.groups.GroupCommand;
 import de.melays.bwunlimited.commands.leave.LeaveCommand;
 import de.melays.bwunlimited.commands.spectate.SpectateCommand;
 import de.melays.bwunlimited.commands.start.StartCommand;
+import de.melays.bwunlimited.commands.stats.StatsCommand;
 import de.melays.bwunlimited.friendjoin.FriendJoinHook;
 import de.melays.bwunlimited.game.ItemManager;
 import de.melays.bwunlimited.game.arenas.ArenaManager;
@@ -274,6 +275,8 @@ public class Main extends JavaPlugin{
 			getCommand("leave").setExecutor(new LeaveCommand(this));
 		if (getConfig().getBoolean("group_command"))
 			getCommand("group").setExecutor(new GroupCommand(this));
+		if (getConfig().getBoolean("stats_command"))
+			getCommand("stats").setExecutor(new StatsCommand(this));
 		
 		//Initialize Tools
 		this.markerTool = new MarkerTool(this);

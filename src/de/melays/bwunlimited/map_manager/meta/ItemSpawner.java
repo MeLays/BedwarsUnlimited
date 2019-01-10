@@ -6,6 +6,8 @@
  ******************************************************************************/
 package de.melays.bwunlimited.map_manager.meta;
 
+import java.util.ArrayList;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -23,16 +25,18 @@ public class ItemSpawner {
 	public Material m;
 	public int ticks;
 	public String displayname;
+	public ArrayList<String> disabled_categories;
 	
 	Main main;
 	
-	public ItemSpawner(Main main , int id , FineRelativeLocation loc , Material m , int ticks , String displayname) {
+	public ItemSpawner(Main main , int id , FineRelativeLocation loc , Material m , int ticks , String displayname , ArrayList<String> disabled_categories) {
 		this.id = id;
 		this.loc = loc;
 		this.m = m;
 		this.ticks = ticks;
 		this.displayname = displayname;
 		this.main = main;
+		this.disabled_categories = disabled_categories;
 	}
 	
 	int scheudler = -1;

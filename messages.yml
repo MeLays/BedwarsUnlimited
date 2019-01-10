@@ -26,6 +26,13 @@ chat:
     spec: "&7[S] &o&8%player% &8» &7%msg%"
 team:
   enter: "%prefix% You entered the team %color%%team%&7!"
+stats:
+ - "%prefix% &7Stats of user &a%player%&7:"
+ - "   &a%points% &7points &8- &a%games% &7games played"
+ - "   &a%kills% &7kills &8- &c%deaths% &7deaths (&a%kd% &7K/D)"
+ - "   &a%won% &7won games &8- &c%lost% &7lost games (&a%wl% &7W/L)"
+ - "   &a%beds% &7beds destroyed &8- &a%bg% &7beds per game"
+stats_unknown_player: "%prefix% &7That player is unknown!"
 game:
   percent: "%prefix% The arena is beeing prepared... &a%percent%%"
   abort: "%prefix% A player has left. Stopping the game..."

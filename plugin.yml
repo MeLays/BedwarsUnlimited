@@ -1,5 +1,5 @@
 name: BedwarsUnlimited
-version: 1.0.1 BETA
+version: 1.0.2 BETA
 description: BedwarsUnlimited Plugin by MeLays
 author: MeLays
 website: http://melays.de/
@@ -26,3 +26,7 @@ commands:
     description: BedwarsUnlimited Spectate
     aliases: []
     usage: /spectate
+  stats:
+    description: BedwarsUnlimited Stats
+    aliases: []
+    usage: /stats

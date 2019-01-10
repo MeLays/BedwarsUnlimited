@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -29,13 +30,13 @@ import net.md_5.bungee.api.ChatColor;
 
 public class StatsManager {
 	
-	StatsAPI statsapi;
+	public StatsAPI statsapi;
 	Channel channel;
 	
-	InternalStatsAPI istatsapi;
+	public InternalStatsAPI istatsapi;
 	InternalChannel ichannel;
 	
-	StatsMode mode = StatsMode.YAML;
+	public StatsMode mode = StatsMode.YAML;
 	
 	Main main;
 	
@@ -216,6 +217,59 @@ public class StatsManager {
 		if (StatsManager.suitable(p, a) && StatsManager.enabled(p)) {
 			this.addToKey(p.getUniqueId(), "points", amount);
 		}
+	}
+	
+	//Send Stats Message
+	public void sendStatsMessage(Player tp , UUID from) {
+		String name = "UNKNOWN NAME";
+		if (mode == StatsMode.MYSQL) {
+			name = this.istatsapi.getNameFromUUID(from);
+		}
+		else if (mode == StatsMode.STATSAPI) {
+			name = this.statsapi.getNameFromUUID(from);
+		}
+		else if (mode == StatsMode.YAML) {
+			name = Bukkit.getOfflinePlayer(from).getName();
+		}
+		
+		HashMap<String , Integer> int_values = new HashMap<String , Integer>();
+		int_values.put("%points%", this.getKey(from, "points"));
+		int_values.put("%games%", this.getKey(from, "games"));
+		int_values.put("%kills%", this.getKey(from, "kills"));
+		int_values.put("%deaths%", this.getKey(from, "deaths"));
+		int_values.put("%won%", this.getKey(from, "won"));
+		int_values.put("%lost%", this.getKey(from, "lost"));
+		int_values.put("%beds%", this.getKey(from, "beds"));
+		
+		HashMap<String , Double> double_values = new HashMap<String , Double>();
+		try{double_values.put("%kd%", ((double)int_values.get("%kills%") / (double)int_values.get("%deaths%")));
+		}catch(Exception e) {
+			double_values.put("%kd%",(double)int_values.get("%kills%"));
+		}
+		try{double_values.put("%wl%", ((double)int_values.get("%won%") / (double)int_values.get("%lost%")));
+		}catch(Exception e) {
+			double_values.put("%wl%",(double)int_values.get("%won%"));
+		}
+		try{double_values.put("%bg%", ((double)int_values.get("%beds%") / (double)int_values.get("%games%")));
+		}catch(Exception e) {
+			double_values.put("%bg%",(double)int_values.get("%beds%"));
+		}
+		
+		for (String s : main.getMessageFetcher().getMessageFetcher().getStringList("stats")) {
+			s = s.replaceAll("%player%", name);
+			s = s.replaceAll("%prefix%", main.getMessageFetcher().getMessage("prefix", false));
+			for (String key : int_values.keySet()) {
+				s = s.replace(key, int_values.get(key).toString());
+			}
+			for (String key : double_values.keySet()) {
+				int temp = (int)(double_values.get(key)*100.0);
+			    double shortDouble = ((double)temp)/100.0;
+			    s = s.replace(key, shortDouble + "");
+			}
+			s = ChatColor.translateAlternateColorCodes('&', s);
+			tp.sendMessage(s);
+		}
+
 	}
 	
 	//Team File Managment

@@ -396,7 +396,8 @@ public class Arena {
 	public void callLobbyEnd() {
 		state = ArenaState.INGAME;
 		for (ItemSpawner spawner : itemSpawners) {
-			spawner.startGenerating(relative);
+			if (!spawner.disabled_categories.contains(main.getArenaManager().getCategory(this.id)))
+				spawner.startGenerating(relative);
 		}
 		// Auto Team add
 		for (Player p : new ArrayList<Player>(players)) {

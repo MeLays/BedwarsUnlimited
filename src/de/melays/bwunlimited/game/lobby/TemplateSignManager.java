@@ -44,8 +44,12 @@ public class TemplateSignManager {
 		int loaded = 0;
 		for (String s : keys) {
 			try {
+				String category = "template_sign";
+				if (getFile().getString(s+".category") != null) {
+					category = getFile().getString(s+".category");
+				}
 				signs.put(Integer.parseInt(s), new TemplateSign(main , Integer.parseInt(s) , ClusterTools.getLiteLocation(getFile(), s) , main.getClusterManager().getCluster(getFile().getString(s+".cluster")).name
-						,Settings.getFromSection(getFile().getConfigurationSection(s+".settings") , main)));
+						,Settings.getFromSection(getFile().getConfigurationSection(s+".settings") , main) , category));
 				loaded += 1;
 			}catch (Exception ex) {
 				ex.printStackTrace();
@@ -93,8 +97,15 @@ public class TemplateSignManager {
 		if (!e.getLine(0).equalsIgnoreCase("[TEMPLATE]")) {
 			return -1;
 		}
+		if (e.getLine(1) == null) return -1;
+		if (e.getLine(1).equals("")) return -1;
 		String cluster = e.getLine(1);
 		main.getClusterManager().getCluster(cluster);
+		String category = "template_sign";
+		if (e.getLine(2) != null) {
+			if (!e.getLine(2).equals(""))
+				category = e.getLine(2);
+		}
 		Set<String> keys = getFile().getKeys(false);
 		int highest = 0;
 		for (String s : keys) {
@@ -111,9 +122,13 @@ public class TemplateSignManager {
 		ClusterTools.saveLiteLocation(getFile(), id+"" , e.getBlock().getLocation());
 		getFile().set(id+".cluster", cluster);
 		new Settings(main).saveToConfig(getFile(), id+".settings");
+		
+		if (!category.equals("template_sign"))
+			getFile().set(id+".category", category);
+		
 		this.saveFile();
 		signs.put(id, new TemplateSign(main , id , ClusterTools.getLiteLocation(getFile(), id+"") , main.getClusterManager().getCluster(getFile().getString(id+".cluster")).name
-				,Settings.getFromSection(getFile().getConfigurationSection(id+".settings") , main)));
+				,Settings.getFromSection(getFile().getConfigurationSection(id+".settings") , main) , category));
 		return id;
 	}
 	

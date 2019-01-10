@@ -48,6 +48,10 @@ public class InternalChannel {
 		}
 	}
 	
+	public InternalAdvancedChannelQuery getAdvancedChannelQuery(){
+		return new InternalAdvancedChannelQuery (this.plugin , this);
+	}
+	
 	public boolean hasKey (String key){
 		try {
 			if (plugin.c.isClosed()){

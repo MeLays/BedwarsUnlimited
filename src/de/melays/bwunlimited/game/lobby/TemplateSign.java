@@ -29,13 +29,16 @@ public class TemplateSign {
 	String cluster;
 	Settings settings;
 	
+	String custom_category;
+	
 	int updatetask;
 	
-	public TemplateSign (Main main , Integer id , Location loc , String cluster , Settings settings) {
+	public TemplateSign (Main main , Integer id , Location loc , String cluster , Settings settings , String custom_category) {
 		this.main = main;
 		this.loc = loc;
 		this.id = id;
 		this.settings = settings;
+		this.custom_category = custom_category;
 		this.cluster = cluster;
 		newArena();
 		update();
@@ -57,7 +60,7 @@ public class TemplateSign {
 	
 	public void newArena() {
 		try {
-			arena = main.getArenaManager().getArena(main.getArenaManager().startGame(main.getClusterManager().getCluster(cluster), settings , "template_sign"));
+			arena = main.getArenaManager().getArena(main.getArenaManager().startGame(main.getClusterManager().getCluster(cluster), settings , custom_category));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

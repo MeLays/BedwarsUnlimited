@@ -426,7 +426,6 @@ categories:
             data: 0
             amount: 1
             displayname: "&bArrow"
-            durability: 264
             lore:
               - "&61 Gold Ingot"
             enchantments: []

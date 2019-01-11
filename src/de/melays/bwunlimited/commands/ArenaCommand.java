@@ -17,6 +17,7 @@ import de.melays.bwunlimited.game.arenas.Arena;
 import de.melays.bwunlimited.game.arenas.settings.Settings;
 import de.melays.bwunlimited.map_manager.Cluster;
 import de.melays.bwunlimited.map_manager.error.UnknownClusterException;
+import net.md_5.bungee.api.ChatColor;
 
 public class ArenaCommand {
 	
@@ -98,6 +99,25 @@ public class ArenaCommand {
 				a.stop();
 			}
 			sender.sendMessage(main.prefix + count + " arenas have been stopped!");
+		}
+		
+		else if (args[1].equalsIgnoreCase("list")) {
+			if (!main.getMessageFetcher().checkPermission(sender, "bwunlimited.setup"))return;
+			ListSender listSender = new ListSender(main , "Arenas");
+			for (Arena a : main.getArenaManager().getArenas()) {
+				listSender.addItem(ChatColor.GRAY + "ID: " + a.id + " - " + ChatColor.YELLOW + a.cluster.name + ChatColor.GRAY + " (" + a.cluster.getDisplayName() + ") - " + ChatColor.YELLOW + a.state);
+			}
+			if (args.length == 2) {
+				listSender.sendList(sender, 1);
+			}
+			else {
+				try {
+					int page = Integer.parseInt(args[3]);
+					listSender.sendList(sender, page);
+				} catch (Exception e) {
+					listSender.sendList(sender, 1);
+				}
+			}
 		}
 		
 		else if (args[1].equalsIgnoreCase("stop")) {

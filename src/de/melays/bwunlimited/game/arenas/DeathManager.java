@@ -29,7 +29,7 @@ public class DeathManager {
 	public void saveHit(Player p , Player hitter) {
 		if (arena.main.getArenaManager().searchPlayer(p) == arena.main.getArenaManager().searchPlayer(hitter)) {
 			killers.put(p, hitter);
-			killerslife.put(p, hitter.getHealth() / 2);
+			killerslife.put(p,  (((double)((int)hitter.getHealth())) / 2));
 			startScheduler(p);
 		}
 	}

@@ -102,7 +102,7 @@ public class StatsManager {
 			}
 			else if (mode == StatsMode.YAML) {
 				getFile().set(uuid.toString() + "." + key, i);
-			}
+				this.saveFile();			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,6 +132,7 @@ public class StatsManager {
 			}
 			else if (mode == StatsMode.YAML) {
 				getFile().set(uuid.toString() + "." + key, str);
+				this.saveFile();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -155,7 +156,7 @@ public class StatsManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return -1;
+		return 0;
 	}
 	
 	public String getStringKey(UUID uuid , String key) {
@@ -242,16 +243,24 @@ public class StatsManager {
 		int_values.put("%beds%", this.getKey(from, "beds"));
 		
 		HashMap<String , Double> double_values = new HashMap<String , Double>();
-		try{double_values.put("%kd%", ((double)int_values.get("%kills%") / (double)int_values.get("%deaths%")));
-		}catch(Exception e) {
-			double_values.put("%kd%",(double)int_values.get("%kills%"));
+		if (int_values.get("%deaths%") != 0) {
+			double_values.put("%kd%", ((double)int_values.get("%kills%") / (double)int_values.get("%deaths%")));
 		}
-		try{double_values.put("%wl%", ((double)int_values.get("%won%") / (double)int_values.get("%lost%")));
-		}catch(Exception e) {
+		else {
+			double_values.put("%kd%", (double)int_values.get("%kills%"));
+		}
+		
+		if (int_values.get("%lost%") != 0) {
+			double_values.put("%wl%", ((double)int_values.get("%won%") / (double)int_values.get("%lost%")));
+		}
+		else{
 			double_values.put("%wl%",(double)int_values.get("%won%"));
 		}
-		try{double_values.put("%bg%", ((double)int_values.get("%beds%") / (double)int_values.get("%games%")));
-		}catch(Exception e) {
+		
+		if (int_values.get("%games%") != 0) {
+			double_values.put("%bg%", ((double)int_values.get("%beds%") / (double)int_values.get("%games%")));
+		}
+		else{
 			double_values.put("%bg%",(double)int_values.get("%beds%"));
 		}
 		

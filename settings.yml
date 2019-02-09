@@ -1,4 +1,4 @@
-gamelobby:
+﻿gamelobby:
   inventory:
     teamselector:
       name: "&6Team selector"
@@ -73,6 +73,28 @@ tab:
   footer:
     - ""
 lobby:
+  scoreboard:
+    title: "&9Bedwars"
+    content:
+      - " "
+      - "&8&l» &9Games running:"
+      - "   &7%games_running% "
+      - "  "
+      - "&8&l» &9Players online:"
+      - "   &7%players_online%  "
+      - "   "
+      - "&8&l» &9Players lobby:"
+      - "   &7%players_lobby%   "
+      - "    "
+      - "&8&l» &9Group:"
+      - "   &7%group_size%&8/&7%group_max%"
+      - "     "
+      - "&8&l» &9Points:"
+      - "   &7%points%    "
+      - "      "
+      - "&cYou can use"
+      - "&call Stats"
+      - "&cvariables here"
   tab:
     prefix: "&7%player_prefix%"
     suffix: "%player_suffix%"

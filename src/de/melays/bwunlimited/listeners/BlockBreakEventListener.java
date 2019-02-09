@@ -42,7 +42,6 @@ public class BlockBreakEventListener implements Listener{
 				else {
 					double x = e.getBlock().getLocation().getX();
 					double z = e.getBlock().getLocation().getZ();
-					@SuppressWarnings("deprecation")
 					ItemStack stack = e.getPlayer().getItemInHand();
 					if (e.getBlock().getDrops(stack).size() != 0 && !main.getConfig().getStringList("game.no_drop").contains(e.getBlock().getType().toString())) {
 						try {

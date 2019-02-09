@@ -40,11 +40,21 @@ import de.melays.bwunlimited.teams.Team;
 public class LobbyManager {
 	
 	Main main;
+	LobbyScoreboard lobbyScoreboard;
 	
 	public HashMap<Player, SettingsGUI> settings = new HashMap<Player, SettingsGUI>();
 	
 	public LobbyManager(Main main) {
 		this.main = main;
+		this.lobbyScoreboard = new LobbyScoreboard(main);
+		Bukkit.getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {
+
+			@Override
+			public void run() {
+				lobbyScoreboard.update();
+			}
+			
+		}, 20, 40);
 		saveFile();
 	}
 	
@@ -77,6 +87,7 @@ public class LobbyManager {
 		p.teleport(getLobbyLocation());
 		PlayerTools.resetPlayer(p);
 		p.setGameMode(GameMode.SURVIVAL);
+		this.lobbyScoreboard.create(p);
 		ColorTabAPI.clearTabStyle(p, Bukkit.getOnlinePlayers());
 		updateVisibility();
 		main.getArenaSelector().setupPlayer(p);

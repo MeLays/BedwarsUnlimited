@@ -34,6 +34,7 @@ public class ArenaLobby {
 	public void updatePlayer(Player p) {
 		p.teleport(arena.main.getLobbyManager().getGameLobbyLocation());
 		PlayerTools.resetPlayer(p);
+		p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 		p.setGameMode(GameMode.ADVENTURE);
 		if (!arena.settings.fixed_teams)
 			p.getInventory().setItem(arena.main.getConfig().getInt("game.teamselector_slot"), arena.main.getItemManager().getItem("gamelobby.teamselector"));

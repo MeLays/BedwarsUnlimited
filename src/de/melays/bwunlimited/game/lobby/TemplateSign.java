@@ -40,6 +40,7 @@ public class TemplateSign {
 		this.settings = settings;
 		this.custom_category = custom_category;
 		this.cluster = cluster;
+		System.out.println(settings.item_drop);
 		newArena();
 		update();
 		updatetask = Bukkit.getScheduler().scheduleSyncRepeatingTask(main, new Runnable() {

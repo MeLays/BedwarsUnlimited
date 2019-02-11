@@ -204,9 +204,6 @@ public class Arena {
 		p.setAllowFlight(true);
 		p.setFlying(true);
 		p.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 1));
-		if (main.getFriendJoinHook() != null) {
-			main.getFriendJoinHook().setArena(p);
-		}
 	}
 
 	private void join(Player p) {
@@ -219,9 +216,6 @@ public class Arena {
 			arenaLobby.updatePlayer(p);
 			if (!silent)this.sendMessage(
 					main.getMessageFetcher().getMessage("game.join", true).replaceAll("%player%", p.getName()));
-		}
-		if (main.getFriendJoinHook() != null) {
-			main.getFriendJoinHook().setArena(p);
 		}
 		updateTab();
 	}
@@ -274,9 +268,6 @@ public class Arena {
 			if (this.getAll().contains(member) && state == ArenaState.LOBBY) {
 				this.leave(member);
 			}
-		}
-		if (main.getFriendJoinHook() != null) {
-			main.getFriendJoinHook().setArena(p);
 		}
 	}
 

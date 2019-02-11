@@ -91,6 +91,7 @@ defaultsettings:
    tnt_detroy_map: false
    cobweb_decay: true
    cobweb_decay_bed: false
+   item_drop: false
    lobby_leave: NORMAL
    min_players: 2
    max_players: 0

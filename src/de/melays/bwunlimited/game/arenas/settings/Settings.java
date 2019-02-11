@@ -23,6 +23,7 @@ public class Settings {
 	public boolean tnt_detroy_map = false;
 	public boolean cobweb_decay = true;
 	public boolean cobweb_decay_bed = false;
+	public boolean item_drop = false;
 	
 	public LeaveType lobby_leave = LeaveType.NORMAL;
 	
@@ -54,6 +55,7 @@ public class Settings {
 		tnt_detroy_map = config.getBoolean("tnt_detroy_map");
 		cobweb_decay = config.getBoolean("cobweb_decay");
 		cobweb_decay_bed = config.getBoolean("cobweb_decay_bed");
+		cobweb_decay_bed = config.getBoolean("item_drop");
 		lobby_leave = LeaveType.valueOf(config.getString("lobby_leave").toUpperCase());
 		min_players = config.getInt("min_players");
 		max_players = config.getInt("max_players");
@@ -91,6 +93,7 @@ public class Settings {
 		r.tnt_detroy_map = config.getBoolean("tnt_detroy_map");
 		r.cobweb_decay = config.getBoolean("cobweb_decay");
 		r.cobweb_decay_bed = config.getBoolean("cobweb_decay_bed");
+		r.item_drop = config.getBoolean("item_drop");
 		r.lobby_leave = LeaveType.valueOf(config.getString("lobby_leave").toUpperCase());
 		r.min_players = config.getInt("min_players");
 		r.max_players = config.getInt("max_players");
@@ -111,6 +114,7 @@ public class Settings {
 		config.set(path + "." + "tnt_detroy_map", tnt_detroy_map);
 		config.set(path + "." + "cobweb_decay", cobweb_decay);
 		config.set(path + "." + "cobweb_decay_bed", cobweb_decay_bed);
+		config.set(path + "." + "item_drop", item_drop);
 		config.set(path + "." + "lobby_leave", lobby_leave.toString());
 		config.set(path + "." + "min_players", min_players);
 		config.set(path + "." + "max_players", max_players);

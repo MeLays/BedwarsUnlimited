@@ -37,6 +37,7 @@ public class ClusterCommand {
 		helpSender.addAlias("generate <name>", "Generate a Cluster-Template", "For test purposes only!" , "/bw cluster generate <cluster>");
 		helpSender.addAlias("enable <name>", "Enable a cluster", "To make it possible to generate the cluster" , "/bw cluster enable <cluster>");
 		helpSender.addAlias("disable <name>", "Disable a cluster", "To make it impossible to generate the cluster" , "/bw cluster disable <cluster>");
+		helpSender.addAlias("tp <name>", "Teleports you to a cluster", "Find back your cluster in the presets world" , "/bw cluster tp <cluster>");
 
 
 		if (args.length == 1) {
@@ -207,7 +208,7 @@ public class ClusterCommand {
 			}
 			if (!main.getMessageFetcher().checkPermission(sender, "bwunlimited.setup"))return;
 			if (args.length <= 1) {
-				sender.sendMessage(main.getMessageFetcher().getMessage("command_usage", true).replaceAll("%command%", "/bw cluster generate <cluster>"));
+				sender.sendMessage(main.getMessageFetcher().getMessage("command_usage", true).replaceAll("%command%", "/bw cluster enable <cluster>"));
 				return;
 			}
 			try {
@@ -228,7 +229,7 @@ public class ClusterCommand {
 			}
 			if (!main.getMessageFetcher().checkPermission(sender, "bwunlimited.setup"))return;
 			if (args.length <= 1) {
-				sender.sendMessage(main.getMessageFetcher().getMessage("command_usage", true).replaceAll("%command%", "/bw cluster generate <cluster>"));
+				sender.sendMessage(main.getMessageFetcher().getMessage("command_usage", true).replaceAll("%command%", "/bw cluster disable <cluster>"));
 				return;
 			}
 			try {
@@ -237,6 +238,24 @@ public class ClusterCommand {
 				main.getClusterManager().saveFile();
 				cluster.reloadCluster();
 				sender.sendMessage(main.prefix +  "The cluster has been disabled and reloaded!");
+			} catch (UnknownClusterException e) {
+				sender.sendMessage(main.prefix +  "This cluster does not exist!");
+			}
+		}
+		
+		else if (args[1].equalsIgnoreCase("tp")) {
+			if (!(sender instanceof Player)) {
+				sender.sendMessage(main.prefix + "You cant run this command from the console!");
+				return;
+			}
+			if (!main.getMessageFetcher().checkPermission(sender, "bwunlimited.setup"))return;
+			if (args.length <= 1) {
+				sender.sendMessage(main.getMessageFetcher().getMessage("command_usage", true).replaceAll("%command%", "/bw cluster tp <cluster>"));
+				return;
+			}
+			try {
+				Cluster cluster = main.getClusterManager().getCluster(args[2]);
+				((Player) sender).teleport(cluster.min.clone().add(0 , 1 , -1));
 			} catch (UnknownClusterException e) {
 				sender.sendMessage(main.prefix +  "This cluster does not exist!");
 			}
